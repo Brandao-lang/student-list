@@ -26,12 +26,26 @@
           .post("/api/student", { name: nameInput.value })
           .then((res) => {
             container.innerHTML = "";
+            nameInput.value = "";
 
             res.data.forEach((studentName) => {
               container.innerHTML += `<p>${studentName}</p>`;
             });
           })
-          .catch((err) => console.log(err));
+          .catch((err) => {
+            nameInput.value = "";
+
+            const notif = document.createElement("aside");
+            notif.innerHTML = `<p>${err.response.data}</p>
+            <button class="close">close</button>`;
+            document.body.appendChild(notif);
+
+            document.querySelector(".close").forEach((btn) => {
+              btn.addEventListener("click", () => {
+                e.target.parentNode.remove();
+              });
+            });
+          });
       }
 
       addForm.addEventListener("submit", submitHandler);
