@@ -24,6 +24,8 @@ app.post('/api/student', (req, res) => {
 
 const port = process.env.PORT || 4444
 
+app.use(rollbar.errorHandler())
+
 
 app.listen(port, () => {
     console.log(`running on port: ${port}`)
